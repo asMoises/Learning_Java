@@ -33,11 +33,11 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
-
+/*
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
+*/
     public void MessageCreator() {
         System.out.println("Product data: " + getName() + ", $ " + getPrice() + ", "
                 + getQuantity()

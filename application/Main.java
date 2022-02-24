@@ -139,7 +139,6 @@ public class Main {
 
 		double price = 0;
 		int opt = 0;
-		int quantityToDel = 0;
 		int quantity = 0;
 		String name = "";
 		Product product = new Product(name, price, quantity);
@@ -175,7 +174,7 @@ public class Main {
 						if (quantity <= 0) {
 							System.out.println("Quantity not allowed. Try another one.");
 						} else {
-							product.setQuantity(quantity);
+							product.AddProducts(quantity);
 						}
 					} while (quantity <= 0);
 
@@ -188,8 +187,8 @@ public class Main {
 								"Quantity now: " + product.getQuantity()
 										+ "\nEnter the product quantity to add stock.");
 						System.out.print("Quantity: ");
-						quantity = product.getQuantity() + sc.nextInt();
-						product.setQuantity(quantity);
+						quantity = sc.nextInt();
+						product.AddProducts(quantity);
 						product.MessageCreator();
 					} else {
 						System.out.println("No product avaible!");
@@ -201,13 +200,12 @@ public class Main {
 						System.out.println("Quantity now: " + product.getQuantity()
 								+ "\nEnter the product quantity to remove from stock.");
 						System.out.print("Quantity to remove: ");
-						quantityToDel = sc.nextInt();
+						quantity = sc.nextInt();
 
-						if ((product.getQuantity() - quantityToDel) < 0) {
+						if ((product.getQuantity() - quantity) < 0) {
 							System.out.println("Quantity is not enought to be decrease!");
 						} else {
-							quantity = product.getQuantity() - quantityToDel;
-							product.setQuantity(quantity);
+							product.RemoveProduct(quantity);
 							product.MessageCreator();
 						}
 					} else {
