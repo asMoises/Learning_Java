@@ -15,12 +15,51 @@ public class Main {
 		// AulaBitWise();
 		// AulaFunctions();
 		// InTriangleData();
-		ProductApp();
+		// ProductApp();
 		// RectangleApp();
 		// EmployeeApp();
 		// StudentApp();
 		// CalcApp();
 		// aulaCotacaoDolar();
+		BankAccount();
+
+	}
+
+	public static void BankAccount() {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+		Account acc;
+
+		System.out.println("Wellcome!!\n\nEnter account number: ");
+		int number = sc.nextInt();
+
+		System.out.print("Enter account holder: ");
+		sc.nextLine();
+		String holder = sc.nextLine();
+
+		System.out.print("Is there an initial deposit? (y/n):");
+		char response = sc.next().charAt(0); // pega o caracter da posição do vetor
+
+		if (response == 'y') {
+			System.out.print("Enter initial deposit value:");
+			double initialDeposit = sc.nextDouble();
+			acc = new Account(holder, number, initialDeposit);
+		} else {
+			acc = new Account(holder, number);
+		}
+
+		System.out.println("\n" + acc);
+		System.out.print("\nEnter a deposit value:");
+		double depValue = sc.nextDouble();
+		acc.deposit(depValue);
+		System.out.println("Update account data: \n" + acc);
+
+		System.out.print("\nEnter a withdraw value:");
+		double withdrawValue = sc.nextDouble();
+		acc.withdraw(withdrawValue);
+		System.out.println("Update account data: \n" + acc);
+
+		sc.close();
 
 	}
 
