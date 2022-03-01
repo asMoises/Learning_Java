@@ -1,9 +1,22 @@
 package application;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
-import entities.*;
+import entities.Account;
+import entities.CalculatorStaticMembers;
+import entities.CurrencyConvert;
+import entities.Employee;
+import entities.Product;
+import entities.Rectangle;
+import entities.Student;
+import entities.Triangle;
+import entities.VectorExerc;
+import entities.VectorProducts;
 
 public class Main {
 
@@ -24,17 +37,88 @@ public class Main {
 		// BankAccount();
 		// vectorEx01();
 		// vectorEx02();
-		vectorExerc();
+		// vectorExerc();
+		// forEachTest();
+		ListTest();
+	}
 
+	public static void ListTest() {
+		List<String> list = new ArrayList<>();
+		System.out.println("*Lista original*");
+		list.add("Maria");
+		list.add("Alex");
+		list.add("Bob");
+		list.add("Anna");
+
+		for (String x : list) {
+			System.out.println(x);
+		}
+		System.out.println("\n*Insere Marco*");
+
+		list.add(2, "Marco");
+		for (String x : list) {
+			System.out.println(x);
+		}
+		System.out.println("\n*Tamanho da lista*");
+		System.out.println(list.size());
+		System.out.println("\n*Exclui Anna*");
+		list.remove("Anna");
+		for (String x : list) {
+			System.out.println(x);
+		}
+		System.out.println("\n*Remove o elemento de posição 1*");
+		list.remove(1);
+		for (String x : list) {
+			System.out.println(x);
+		}
+		System.out.println("\n*Remove todo elemento M na posição [0]*");
+		list.removeIf(x -> x.charAt(0) == 'M'); // predicado: remove todo x, tval que x[0] seja == 'M'
+		for (String x : list) {
+			System.out.println(x);
+		}
+		System.out.println("\n*Index of*");
+		list.add("Alex");
+		list.add("Anna");
+		
+		for (String x : list) {
+			System.out.println(x);
+		}
+		System.out.println("Index of Bob: "+list.indexOf("Bob")); // quando não encontra, retorna -1
+		
+		System.out.println("\n*Fiter of*");
+				
+		List<String> result = list.stream().filter(x -> x.charAt(0)=='A').collect(Collectors.toList()); //pega  alista atual, converte pra stream, filtra e devolve no tipo list
+		for (String x : result) {
+			System.out.println(x);
+		}
+		
+		System.out.println("\n*Finding element*");
+		
+		String name = list.stream().filter(x -> x.charAt(0) == 'A').findFirst().orElse("Não achei!"); // pesquia elemento em um lista e se não achar, retonra null
+		System.out.println(name);
+	}
+
+	public static void forEachTest() {
+		String[] vect = new String[] { "Maria", "Bob", "Alex" };
+
+		for (int i = 0; i < vect.length; i++) {
+			System.out.println(vect[i]);
+		}
+
+		System.out.println("-------------------------");
+
+		for (String obj : vect) { // para cada objeto ou elemento contindo no vect faça:
+			System.out.println(obj);
+		}
 	}
 
 	public static void vectorExerc() {
 		Scanner sc = new Scanner(System.in);
 		VectorExerc[] vect = new VectorExerc[10];
-		
+
 		System.out.print("How many rooms will be rented? ");
 		int n = sc.nextInt();
-		
+
 		for (int i = 1; i <= n; i++) {
 			System.out.println();
 			System.out.println("Rent #" + i + ":");
@@ -45,7 +129,8 @@ public class Main {
 			String email = sc.nextLine();
 			System.out.print("Room: ");
 			int room = sc.nextInt();
-			vect[room] = new VectorExerc(name, email); // a posição do vetro não era i, e sim room! esse foi o meu erro no exercício!
+			vect[room] = new VectorExerc(name, email); // a posição do vetro não era i, e sim room! esse foi o meu erro
+														// no exercício!
 		}
 		System.out.println();
 		System.out.println("Busy rooms:");
