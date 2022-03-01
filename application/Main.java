@@ -21,11 +21,106 @@ public class Main {
 		// StudentApp();
 		// CalcApp();
 		// aulaCotacaoDolar();
-		BankAccount();
+		// BankAccount();
+		// vectorEx01();
+		// vectorEx02();
+		vectorExerc();
+
+	}
+
+	public static void vectorExerc() {
+		Scanner sc = new Scanner(System.in);
+		VectorExerc[] vect = new VectorExerc[10];
+		
+		System.out.print("How many rooms will be rented? ");
+		int n = sc.nextInt();
+		
+		for (int i = 1; i <= n; i++) {
+			System.out.println();
+			System.out.println("Rent #" + i + ":");
+			System.out.print("Name: ");
+			sc.nextLine();
+			String name = sc.nextLine();
+			System.out.print("Email: ");
+			String email = sc.nextLine();
+			System.out.print("Room: ");
+			int room = sc.nextInt();
+			vect[room] = new VectorExerc(name, email); // a posição do vetro não era i, e sim room! esse foi o meu erro no exercício!
+		}
+		System.out.println();
+		System.out.println("Busy rooms:");
+		for (int i = 0; i < 10; i++) {
+			if (vect[i] != null) {
+				System.out.println(i + ": " + vect[i]);
+			}
+		}
+		sc.close();
+	}
+
+	public static void vectorEx02() {
+
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Enter the value: ");
+		int n = sc.nextInt();
+
+		VectorProducts[] vect = new VectorProducts[n];
+
+		System.out.println("Enter the products data");
+		for (int i = 0; i < vect.length; i++) {
+			sc.nextLine();
+			System.out.print("Name: ");
+			String name = sc.nextLine();
+			System.out.println("Price: ");
+			double price = sc.nextDouble();
+			vect[i] = new VectorProducts(name, price);
+		}
+
+		double sum = 0;
+
+		for (int i = 0; i < vect.length; i++) {
+			sum += vect[i].getPrice();
+		}
+
+		double avg = sum / vect.length;
+		System.out.printf("Average price: %.2f%n", avg);
+
+		sc.close();
+
+	}
+
+	public static void vectorEx01() {
+
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Enter the value: ");
+		int n = sc.nextInt();
+
+		double[] vector = new double[n];
+
+		for (int i = 0; i < n; i++) {
+
+			System.out.print("Position[" + i + "] = ");
+			vector[i] = sc.nextDouble();
+		}
+
+		double sum = 0;
+
+		for (int i = 0; i < n; i++) {
+			sum += vector[i];
+		}
+
+		double avg = sum / n;
+		System.out.printf("Average: %.2f%n", avg);
+
+		sc.close();
 
 	}
 
 	public static void BankAccount() {
+
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		Account acc;
@@ -126,9 +221,8 @@ public class Main {
 		System.out.print("Tax of salary: ");
 		emp.tax = sc.nextDouble();
 
-		message = "Employee Name: " + emp.name + "\n" +
-				"Gross Salary: $ " + String.format("%.2f", emp.grossSalary) +
-				"\n\nWhitch percentage to increase salary?\n";
+		message = "Employee Name: " + emp.name + "\n" + "Gross Salary: $ " + String.format("%.2f", emp.grossSalary)
+				+ "\n\nWhitch percentage to increase salary?\n";
 
 		System.out.println(message);
 
@@ -136,10 +230,8 @@ public class Main {
 		double perc = sc.nextDouble();
 		emp.IncreaseSalary(perc);
 
-		message = "Updating Data...\n" +
-				"\nName employee: " + emp.name +
-				"\nGross Salary: " + emp.grossSalary +
-				"\nSalary (tax over gross salary): " + emp.NetSalary();
+		message = "Updating Data...\n" + "\nName employee: " + emp.name + "\nGross Salary: " + emp.grossSalary
+				+ "\nSalary (tax over gross salary): " + emp.NetSalary();
 
 		System.out.println(message);
 		sc.close();
@@ -161,11 +253,9 @@ public class Main {
 		r.height = sc.nextDouble();
 		System.out.println("Calculating...\n");
 
-		message = "Rectangle Data!\n" +
-				"Area: " + String.format("%.2f", r.Area()) + "m²\n" +
-				"Perimeter: " + String.format("%.2f", r.Perimeter()) + "m\n" +
-				"Diagonal: " + String.format("%.2f", r.Diagonal()) + "m\n" +
-				">>";
+		message = "Rectangle Data!\n" + "Area: " + String.format("%.2f", r.Area()) + "m²\n" + "Perimeter: "
+				+ String.format("%.2f", r.Perimeter()) + "m\n" + "Diagonal: " + String.format("%.2f", r.Diagonal())
+				+ "m\n" + ">>";
 		System.out.println(message);
 
 		sc.close();
@@ -190,94 +280,92 @@ public class Main {
 			opt = sc.nextInt();
 
 			switch (opt) {
-				case 1:
-					// 1 - Insert Product
-					System.out.println("Enter product data.");
-					System.out.print("Name: ");
-					name = sc.next();
-					product.setName(name);
+			case 1:
+				// 1 - Insert Product
+				System.out.println("Enter product data.");
+				System.out.print("Name: ");
+				name = sc.next();
+				product.setName(name);
 
-					do {
-						System.out.print("Price: ");
-						price = sc.nextDouble();
-						if (price <= 0) {
-							System.out.println("Price not allowed! Try another one.");
-						} else {
-							product.setPrice(price);
-						}
-					} while (price <= 0);
-
-					do {
-						System.out.print("Quantity: ");
-						quantity = sc.nextInt();
-						if (quantity <= 0) {
-							System.out.println("Quantity not allowed. Try another one.");
-						} else {
-							product.AddProducts(quantity);
-						}
-					} while (quantity <= 0);
-
-					System.out.println(product);
-					break;
-				case 2:
-					if (product.getName() != "") {
-						// 2 - Add product quantity
-						System.out.println(
-								"Quantity now: " + product.getQuantity()
-										+ "\nEnter the product quantity to add stock.");
-						System.out.print("Quantity: ");
-						quantity = sc.nextInt();
-						product.AddProducts(quantity);
-						product.MessageCreator();
+				do {
+					System.out.print("Price: ");
+					price = sc.nextDouble();
+					if (price <= 0) {
+						System.out.println("Price not allowed! Try another one.");
 					} else {
-						System.out.println("No product avaible!");
-					}
-					break;
-				case 3:
-					// 3 - Remove product quantity
-					if (product.getQuantity() > 0) {
-						System.out.println("Quantity now: " + product.getQuantity()
-								+ "\nEnter the product quantity to remove from stock.");
-						System.out.print("Quantity to remove: ");
-						quantity = sc.nextInt();
-
-						if ((product.getQuantity() - quantity) < 0) {
-							System.out.println("Quantity is not enought to be decrease!");
-						} else {
-							product.RemoveProduct(quantity);
-							product.MessageCreator();
-						}
-					} else {
-						System.out.println("No product avaible!");
-					}
-					break;
-				case 4:
-					if (product.getName() != "") {
-						// 4 - Update product price
-						System.out.print("Price now: " + product.getPrice() + "\nEnter the product new price: ");
-						price = sc.nextDouble();
 						product.setPrice(price);
-						product.MessageCreator();
-					} else {
-						System.out.println("No product avaible!");
 					}
-					break;
-				case 5:
-					if (product.getName() != "") {
-						product.MessageCreator();
-					} else {
-						System.out.println("No product avaible!");
-					}
-					break;
-				case 0:
-					System.out.println("Exiting... OK! :)");
-					break;
+				} while (price <= 0);
 
-				default:
-					// message error in case not from 1 to 5 opt
+				do {
+					System.out.print("Quantity: ");
+					quantity = sc.nextInt();
+					if (quantity <= 0) {
+						System.out.println("Quantity not allowed. Try another one.");
+					} else {
+						product.AddProducts(quantity);
+					}
+				} while (quantity <= 0);
+
+				System.out.println(product);
+				break;
+			case 2:
+				if (product.getName() != "") {
+					// 2 - Add product quantity
 					System.out.println(
-							"ERROR!\nTry another option!");
-					break;
+							"Quantity now: " + product.getQuantity() + "\nEnter the product quantity to add stock.");
+					System.out.print("Quantity: ");
+					quantity = sc.nextInt();
+					product.AddProducts(quantity);
+					product.MessageCreator();
+				} else {
+					System.out.println("No product avaible!");
+				}
+				break;
+			case 3:
+				// 3 - Remove product quantity
+				if (product.getQuantity() > 0) {
+					System.out.println("Quantity now: " + product.getQuantity()
+							+ "\nEnter the product quantity to remove from stock.");
+					System.out.print("Quantity to remove: ");
+					quantity = sc.nextInt();
+
+					if ((product.getQuantity() - quantity) < 0) {
+						System.out.println("Quantity is not enought to be decrease!");
+					} else {
+						product.RemoveProduct(quantity);
+						product.MessageCreator();
+					}
+				} else {
+					System.out.println("No product avaible!");
+				}
+				break;
+			case 4:
+				if (product.getName() != "") {
+					// 4 - Update product price
+					System.out.print("Price now: " + product.getPrice() + "\nEnter the product new price: ");
+					price = sc.nextDouble();
+					product.setPrice(price);
+					product.MessageCreator();
+				} else {
+					System.out.println("No product avaible!");
+				}
+				break;
+			case 5:
+				if (product.getName() != "") {
+					product.MessageCreator();
+				} else {
+					System.out.println("No product avaible!");
+				}
+				break;
+			case 0:
+				System.out.println("Exiting... OK! :)");
+				break;
+
+			default:
+				// message error in case not from 1 to 5 opt
+				System.out.println("ERROR!\nTry another option!");
+				break;
 			}
 		} while (opt != 0);
 
