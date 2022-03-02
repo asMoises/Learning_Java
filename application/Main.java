@@ -1,16 +1,16 @@
 package application;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import entities.Account;
 import entities.CalculatorStaticMembers;
 import entities.CurrencyConvert;
 import entities.Employee;
+import entities.EmployeeListTest;
 import entities.Product;
 import entities.Rectangle;
 import entities.Student;
@@ -39,7 +39,167 @@ public class Main {
 		// vectorEx02();
 		// vectorExerc();
 		// forEachTest();
-		ListTest();
+		// ListTest();
+		// EmployeeListExerc();
+		// Matrix();
+		MatrixExerc();
+
+	}
+
+	public static void MatrixExerc() {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Enter the dimension of line 'M': ");
+		int m = sc.nextInt();
+		System.out.print("Enter the dimension of column 'N': ");
+		int n = sc.nextInt();
+
+		int[][] mat = new int[m][n]; // instance a new mat at heap memory
+
+		System.out.println("Enter all the data of Matrix: ");
+		for (int i = 0; i < m; i++) { // rum the lines
+			for (int j = 0; j < n; j++) {// rum the columns
+				mat[i][j] = sc.nextInt();
+			}
+		}
+
+		System.out.println("All data in the matrix [m] [n]");
+		for (int i = 0; i < m; i++) { // rum the lines
+			for (int j = 0; j < n; j++) {// rum the columns
+				System.out.print(mat[i][j] + " ");
+			}
+			System.out.println();
+		}
+		int askNumber;
+		do {
+			System.out.println("\nEnter the number to be find: ");
+			askNumber = sc.nextInt();
+
+			for (int i = 0; i < m; i++) { // rum the lines
+				for (int j = 0; j < n; j++) {// rum the columns
+					if (askNumber == mat[i][j]) {
+						if (i - 1 >= 0 && j - 1 >= 0) {
+							System.out.print("Left: " + mat[i][j-1]);
+						}
+						if (i - 1 >= 0 && j - 1 >= 0) {
+							System.out.print("Right: " + mat[i][j+1]);
+						}
+					}
+				}
+			}
+		} while (askNumber <= 6);
+
+		sc.close();
+	}
+
+	public static void Matrix() {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Enter the dimension of Matrix: ");
+		int n = sc.nextInt();
+
+		int[][] mat = new int[n][n]; // instance a new mat at heap memory
+
+		System.out.println("Enter all the data of Matrix (separated by space): ");
+		for (int i = 0; i < mat.length; i++) { // rum the lines
+			for (int j = 0; j < mat.length; j++) {// rum the columns
+				mat[i][j] = sc.nextInt();
+			}
+
+		}
+
+		// Main diagonal
+		System.out.println("Main diagonal:");
+		for (int i = 0; i < mat.length; i++) { // main diagonal
+			System.out.print(mat[i][i] + " ");
+		}
+		System.out.println();
+
+		// Negative numbers on the Matrix
+		int count = 0;
+		for (int i = 0; i < mat.length; i++) { // rum the lines
+			for (int j = 0; j < mat.length; j++) {// rum the columns
+				if (mat[i][j] < 0) {
+					count++;
+				}
+			}
+		}
+		System.out.println("Negative number: " + count);
+		sc.close();
+	}
+
+	public static void EmployeeListExerc() {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		List<EmployeeListTest> list = new ArrayList<>();
+
+		System.out.print("How many employees will be registred? "); // tamanho da lista!
+		int n = sc.nextInt();
+
+		// Insert employee at list
+		for (int i = 0; i < n; i++) {
+			System.out.println("\nEmployee #" + (i + 1) + ":");
+			System.out.print("Id: ");
+			Integer id = sc.nextInt();
+
+			// check if id already exist
+			while (hasId(list, id)) {
+				System.out.println("ID already taken! Try again");
+				id = sc.nextInt();
+			}
+
+			System.out.print("Employee: ");
+			sc.nextLine();
+			String name = sc.nextLine();
+			System.out.print("Salary: ");
+			Double salary = sc.nextDouble();
+
+			EmployeeListTest emp = new EmployeeListTest(id, name, salary);
+
+			list.add(emp);
+		}
+
+		// ask for percentage to increase
+		System.out.print("Enter the employee id that will have salary increase: ");
+		int idSalary = sc.nextInt();
+
+		EmployeeListTest e = list.stream().filter(x -> x.getId() == idSalary).findFirst().orElse(null);
+
+		if (e == null) {
+			System.out.println("ID not found!");
+		} else {
+			System.out.println("Enter the percentage: ");
+			double p = sc.nextDouble();
+			e.increaseSalary(p);
+		}
+
+		// show entire list
+		System.out.println("\nList of employee:");
+		for (EmployeeListTest x : list) {
+			System.out.println(x);
+		}
+
+		sc.close();
+	}
+
+	public static boolean hasId(List<EmployeeListTest> list, int id) {
+		EmployeeListTest emp = list.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+
+		return emp != null; // This is a conditional structure that returns true "if" emp is different of
+							// null!
+	}
+
+	public static Integer position(List<EmployeeListTest> list, int id) {
+
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getId() == id) {
+				return i;
+			}
+		}
+		return null;
 	}
 
 	public static void ListTest() {
@@ -79,22 +239,34 @@ public class Main {
 		System.out.println("\n*Index of*");
 		list.add("Alex");
 		list.add("Anna");
-		
+
 		for (String x : list) {
 			System.out.println(x);
 		}
-		System.out.println("Index of Bob: "+list.indexOf("Bob")); // quando não encontra, retorna -1
-		
+		System.out.println("Index of Bob: " + list.indexOf("Bob")); // quando não encontra, retorna -1
+
 		System.out.println("\n*Fiter of*");
-				
-		List<String> result = list.stream().filter(x -> x.charAt(0)=='A').collect(Collectors.toList()); //pega  alista atual, converte pra stream, filtra e devolve no tipo list
+
+		List<String> result = list.stream().filter(x -> x.charAt(0) == 'A').collect(Collectors.toList()); // pega alista
+																											// atual,
+																											// converte
+																											// pra
+																											// stream,
+																											// filtra e
+																											// devolve
+																											// no tipo
+																											// list
 		for (String x : result) {
 			System.out.println(x);
 		}
-		
+
 		System.out.println("\n*Finding element*");
-		
-		String name = list.stream().filter(x -> x.charAt(0) == 'A').findFirst().orElse("Não achei!"); // pesquia elemento em um lista e se não achar, retonra null
+
+		String name = list.stream().filter(x -> x.charAt(0) == 'A').findFirst().orElse("Não achei!"); // pesquia
+																										// elemento em
+																										// um lista e se
+																										// não achar,
+																										// retonra null
 		System.out.println(name);
 	}
 
