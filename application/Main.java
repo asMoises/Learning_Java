@@ -65,30 +65,42 @@ public class Main {
 		}
 
 		System.out.println("All data in the matrix [m] [n]");
-		for (int i = 0; i < m; i++) { // rum the lines
-			for (int j = 0; j < n; j++) {// rum the columns
+		for (int i = 0; i < mat.length; i++) { // rum the lines
+			for (int j = 0; j < mat[i].length; j++) {// rum the columns
 				System.out.print(mat[i][j] + " ");
 			}
 			System.out.println();
 		}
+
 		int askNumber;
 		do {
 			System.out.println("\nEnter the number to be find: ");
 			askNumber = sc.nextInt();
 
-			for (int i = 0; i < m; i++) { // rum the lines
-				for (int j = 0; j < n; j++) {// rum the columns
-					if (askNumber == mat[i][j]) {
-						if (i - 1 >= 0 && j - 1 >= 0) {
-							System.out.print("Left: " + mat[i][j-1]);
+			for (int i = 0; i < mat.length; i++) { // rum the columns
+				for (int j = 0; j < mat[i].length; j++) {// rum the lines
+
+					if (askNumber == mat[i][j]) { // askNumber found!
+
+						System.out.println(askNumber + " is on: mat[" + i + "][" + j + "]");
+						if (j > 0) {
+							System.out.println("Its left: " + mat[i][j - 1]);
 						}
-						if (i - 1 >= 0 && j - 1 >= 0) {
-							System.out.print("Right: " + mat[i][j+1]);
+						if (i > 0) {
+							System.out.println("Its up: " + mat[i - 1][j]);
 						}
+						if (j < mat[i].length - 1) {
+							System.out.println("Its right: " + mat[i][j + 1]);
+						}
+						if (i < mat.length - 1) {
+							System.out.println("Its down: " + mat[i + 1][j]);
+						}
+
 					}
 				}
 			}
-		} while (askNumber <= 6);
+		} while (askNumber >= 0);
+		System.out.println("End!");
 
 		sc.close();
 	}
