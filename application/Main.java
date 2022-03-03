@@ -1,9 +1,15 @@
 package application;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import entities.Account;
@@ -20,7 +26,7 @@ import entities.VectorProducts;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
 		// AulaIODefault();
 		// AulaScope();
@@ -42,7 +48,71 @@ public class Main {
 		// ListTest();
 		// EmployeeListExerc();
 		// Matrix();
-		MatrixExerc();
+		// MatrixExerc();
+		// DateTests();
+
+		CalendarTest();
+	}
+
+	public static void CalendarTest() {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm:ss"); // format the date
+		Date d = Date.from(Instant.parse("2018-06-25T15:42:07Z")); // insert a date to date instance d
+
+		System.out.println(sdf.format(d));
+
+		// using calendar to manipulate date data
+		Calendar cal = Calendar.getInstance(); // create an instance of Calendar
+
+		cal.setTime(d); // insert the actual date in the cal instance
+		cal.add(Calendar.HOUR_OF_DAY, 4); // sum 4 hours
+
+		// insert the manipulated date in the d instance
+		d = cal.getTime(); // get the time plus 4 hours
+		System.out.println(sdf.format(d));
+
+		// getting the minutes from a date: "2018-06-25T15:42:07Z"
+		int minute = cal.get(Calendar.MINUTE);
+		System.out.println("The minute: " + minute);
+
+		int month = 1 + cal.get(Calendar.MONTH); // remember, month starts on 0, it's necessray to add 1 (January is 0)
+		System.out.println("Month: " + month);
+
+	}
+
+	public static void DateTests() throws ParseException {
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+		sdf3.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+		Date x1 = new Date();
+		Date x2 = new Date(System.currentTimeMillis());
+		Date x3 = new Date(0L);
+		Date x4 = new Date(1000L * 60L * 60L * 5L);
+
+		Date y1 = sdf1.parse("25/06/2018");
+		Date y2 = sdf2.parse("25/06/2018 15:42:07");
+		Date y3 = Date.from(Instant.parse("2018-06-25T15:42:07Z"));
+
+		System.out.println("--------------------------------------");
+		System.out.println("x1: " + x1);
+		System.out.println("x2: " + x2);
+		System.out.println("x3: " + x3);
+		System.out.println("x4: " + x4);
+		System.out.println("y1: " + y1);
+		System.out.println("y2: " + y2);
+		System.out.println("y3: " + y3);
+
+		System.out.println("--------------------------------------");
+		System.out.println("x1: " + sdf3.format(x1));
+		System.out.println("x2: " + sdf3.format(x2));
+		System.out.println("x3: " + sdf3.format(x3));
+		System.out.println("x4: " + sdf3.format(x4));
+		System.out.println("y1: " + sdf3.format(y1));
+		System.out.println("y2: " + sdf3.format(y2));
+		System.out.println("y3: " + sdf3.format(y3));
 
 	}
 
@@ -82,7 +152,7 @@ public class Main {
 
 					if (askNumber == mat[i][j]) { // askNumber found!
 
-						System.out.println(askNumber + " is on: mat[" + i + "][" + j + "]");
+						System.out.println("Position: mat[" + i + "][" + j + "]");
 						if (j > 0) {
 							System.out.println("Its left: " + mat[i][j - 1]);
 						}
