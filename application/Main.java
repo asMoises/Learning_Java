@@ -17,6 +17,8 @@ import entities.CalculatorStaticMembers;
 import entities.CurrencyConvert;
 import entities.Employee;
 import entities.EmployeeListTest;
+import entities.Orders;
+import entities.OrdersStatus;
 import entities.Product;
 import entities.Rectangle;
 import entities.Student;
@@ -50,9 +52,27 @@ public class Main {
 		// Matrix();
 		// MatrixExerc();
 		// DateTests();
-
-		CalendarTest();
+		// CalendarTest();
+		//EnumTests();
+		
+		DecompTests();
+		
+		
 	}
+	
+	public static void DecompTests(){
+		
+	}
+	
+	public static void EnumTests() {
+		
+		Orders order = new Orders(1080, new Date(), OrdersStatus.PENDING_PAYMENT );
+		
+		System.out.println(order);
+	
+	
+	}
+	
 
 	public static void CalendarTest() {
 
