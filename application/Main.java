@@ -19,11 +19,13 @@ import decomp.Worker;
 import decomp_enum.WorkerLevel;
 import entities.Account;
 import entities.CalculatorStaticMembers;
+import entities.Comment;
 import entities.CurrencyConvert;
 import entities.Employee;
 import entities.EmployeeListTest;
 import entities.Orders;
 import entities.OrdersStatus;
+import entities.Post;
 import entities.Product;
 import entities.Rectangle;
 import entities.Student;
@@ -59,9 +61,32 @@ public class Main {
 		// DateTests();
 		// CalendarTest();
 		// EnumTests();
+		// DecompTests();
+		SocialMidiaPost();
+	}
 
-		DecompTests();
+	public static void SocialMidiaPost() throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
 
+		Comment c1 = new Comment("Have a nice trip!");
+		Comment c2 = new Comment("Wow, that's awesome!");
+
+		Post p1 = new Post(sdf.parse("21/06/2018 13:05:44"), "Travel to New Zeland!",
+				"I'm going to visit this wonderful country!", 12);
+
+		p1.addComment(c1);
+		p1.addComment(c2);
+
+		Comment c3 = new Comment("Good night!");
+		Comment c4 = new Comment("May the force be with you!");
+
+		Post p2 = new Post(sdf.parse("28/07/2018 23:14:19"), "Good night guys!", "See you tomorrow", 5);
+		
+		p2.addComment(c3);
+		p2.addComment(c4);
+
+		System.out.println(p1);
+		System.out.println(p2);
 	}
 
 	public static void DecompTests() throws ParseException {
