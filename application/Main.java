@@ -1,5 +1,6 @@
 package application;
 
+import java.security.DrbgParameters.NextBytes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -12,6 +13,10 @@ import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
+import decomp.Department;
+import decomp.HourContract;
+import decomp.Worker;
+import decomp_enum.WorkerLevel;
 import entities.Account;
 import entities.CalculatorStaticMembers;
 import entities.CurrencyConvert;
@@ -53,26 +58,70 @@ public class Main {
 		// MatrixExerc();
 		// DateTests();
 		// CalendarTest();
-		//EnumTests();
-		
+		// EnumTests();
+
 		DecompTests();
-		
-		
+
 	}
-	
-	public static void DecompTests(){
-		
+
+	public static void DecompTests() throws ParseException {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		System.out.print("Enter department's name: ");
+		String departmentName = sc.nextLine();
+
+		System.out.print("Enter worker data: \n");
+		System.out.println("Name: ");
+		String workerName = sc.nextLine();
+		System.out.print("Leve: ");
+		String workeLevel = sc.nextLine();
+		System.out.print("Base salary: ");
+		double baseSalary = sc.nextDouble();
+
+		// instance of Worker
+		Worker worker = new Worker(workerName, WorkerLevel.valueOf(workeLevel), baseSalary,
+				new Department(departmentName));
+
+		System.out.print("Enter the quantity of contracts: ");
+		int n = sc.nextInt();
+		for (int i = 0; i < n; i++) {
+			System.out.println("Entre contract #" + (i + 1) + " data: ");
+			System.out.print("Date (DD/MM/YYY): ");
+			Date contractDate = sdf.parse(sc.next());
+			System.out.println("Enter value per hour: ");
+			double valuePerHour = sc.nextDouble();
+			System.out.print("Duration (hours): ");
+			int hours = sc.nextInt();
+
+			HourContract contract = new HourContract(contractDate, valuePerHour, hours);
+			worker.addContract(contract);
+
+		}
+
+		System.out.println();
+		System.out.print("Enter month and year to calculate income (MM/YYY): ");
+		String monthAndYear = sc.next();
+
+		int month = Integer.parseInt(monthAndYear.substring(0, 2));
+		int year = Integer.parseInt(monthAndYear.substring(3));
+
+		System.out.println("Name: " + worker.getName());
+		System.out.println("Department: " + worker.getDepartment().getName());
+		System.out.println("Income for " + monthAndYear + ": " + String.format("%.2f", worker.income(year, month)));
+
+		sc.close();
+
 	}
-	
+
 	public static void EnumTests() {
-		
-		Orders order = new Orders(1080, new Date(), OrdersStatus.PENDING_PAYMENT );
-		
+
+		Orders order = new Orders(1080, new Date(), OrdersStatus.PENDING_PAYMENT);
+
 		System.out.println(order);
-	
-	
+
 	}
-	
 
 	public static void CalendarTest() {
 
