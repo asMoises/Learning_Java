@@ -1,6 +1,5 @@
 package application;
 
-import java.security.DrbgParameters.NextBytes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -16,6 +15,11 @@ import java.util.stream.Collectors;
 import decomp.Department;
 import decomp.HourContract;
 import decomp.Worker;
+import decomp.sales.Client;
+import decomp.sales.Order;
+import decomp.sales.OrderItem;
+import decomp.sales.ProductSales;
+import decomp_enum.OrderStatus;
 import decomp_enum.WorkerLevel;
 import entities.Account;
 import entities.CalculatorStaticMembers;
@@ -24,7 +28,6 @@ import entities.CurrencyConvert;
 import entities.Employee;
 import entities.EmployeeListTest;
 import entities.Orders;
-import entities.OrdersStatus;
 import entities.Post;
 import entities.Product;
 import entities.Rectangle;
@@ -62,7 +65,73 @@ public class Main {
 		// CalendarTest();
 		// EnumTests();
 		// DecompTests();
-		SocialMidiaPost();
+		// SocialMidiaPost();
+
+		salesSys();
+	}
+
+	public static void salesSys() throws ParseException {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+		// create a mask to date
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // OrderItem orderItem = new OrderItem(quantity,
+																	// productPrice, product);
+
+		// Getting and instancing client
+		System.out.println("Enter client data:");
+		System.out.print("Name: ");
+		String name = sc.nextLine();
+		System.out.print("Email: ");
+		String email = sc.next();
+		System.out.print("Birth date (DD/MM/YYYY): ");
+		Date birthDate = sdf.parse(sc.next());
+		Client client = new Client(name, email, birthDate);
+
+		// Getting and Instancing order
+		OrderStatus status = OrderStatus.PROCESSING;
+		System.out.println("Status: " + status + "\n");
+		Order order = new Order(new Date(), status, client); // the composition of Order Class constructor is created by
+																// a composition of an object Client, an object static
+																// OrderStatus and the actual date
+
+		// Now it is necessary to insert items in a object of OrderItems and insert this
+		// OrderItem object in a list instanced by Order class.
+
+		// First of all, get the items!
+		System.out.println("Enter order data:");
+		System.out.print("How many items to this order? ");
+		int n = sc.nextInt();
+
+		// For all items (n), do:
+		for (int i = 1; i <= n; i++) {
+			System.out.println("Enter #" + i + " item data:");
+			System.out.print("Product name: ");
+			sc.nextLine();
+			String productName = sc.nextLine();
+			System.out.print("Product price: ");
+			double productPrice = sc.nextDouble();
+
+			ProductSales product = new ProductSales(productName, productPrice);// all items content products, so it is necessary
+			
+			// to instanced a new product, this encapsulate
+			// the product data in an object
+			// Get the quantity to composite the order
+			System.out.print("Quantity: ");
+			int quantity = sc.nextInt();
+
+			OrderItem orderItem = new OrderItem(quantity, productPrice, product);
+
+			// Composition of OrderIten ok.
+			// Inserting in a list of Orders
+			order.addItem(orderItem);
+		}
+
+		// outputs
+		System.out.println();
+		System.out.println("ORDER SUMMARY:");
+		System.out.println(order);// override toString
+
+		sc.close();
 	}
 
 	public static void SocialMidiaPost() throws ParseException {
@@ -81,7 +150,7 @@ public class Main {
 		Comment c4 = new Comment("May the force be with you!");
 
 		Post p2 = new Post(sdf.parse("28/07/2018 23:14:19"), "Good night guys!", "See you tomorrow", 5);
-		
+
 		p2.addComment(c3);
 		p2.addComment(c4);
 
@@ -142,7 +211,7 @@ public class Main {
 
 	public static void EnumTests() {
 
-		Orders order = new Orders(1080, new Date(), OrdersStatus.PENDING_PAYMENT);
+		Orders order = new Orders(1080, new Date(), OrderStatus.PENDING_PAYMENT);
 
 		System.out.println(order);
 

@@ -2,16 +2,18 @@ package entities;
 
 import java.util.Date;
 
+import decomp_enum.OrderStatus;
+
 public class Orders {
     private Integer id;
     private Date moment;
-    private OrdersStatus status;
+    private OrderStatus status;
     
     public Orders() {
 
 	}
     
-	public Orders(Integer id, Date moment, OrdersStatus status) {
+	public Orders(Integer id, Date moment, OrderStatus status) {
 		this.id = id;
 		this.moment = moment;
 		this.status = status;
@@ -33,11 +35,11 @@ public class Orders {
 		this.moment = moment;
 	}
 
-	public OrdersStatus getStatus() {
+	public OrderStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(OrdersStatus status) {
+	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
 
