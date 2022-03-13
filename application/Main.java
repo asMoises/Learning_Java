@@ -66,8 +66,7 @@ public class Main {
 		// EnumTests();
 		// DecompTests();
 		// SocialMidiaPost();
-
-		salesSys();
+		// salesSys();
 	}
 
 	public static void salesSys() throws ParseException {
