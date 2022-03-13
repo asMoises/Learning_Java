@@ -66,7 +66,7 @@ public class Main {
 		// EnumTests();
 		// DecompTests();
 		// SocialMidiaPost();
-		// salesSys();
+		salesSys();
 	}
 
 	public static void salesSys() throws ParseException {
@@ -110,8 +110,9 @@ public class Main {
 			System.out.print("Product price: ");
 			double productPrice = sc.nextDouble();
 
-			ProductSales product = new ProductSales(productName, productPrice);// all items content products, so it is necessary
-			
+			ProductSales product = new ProductSales(productName, productPrice);// all items content products, so it is
+																				// necessary
+
 			// to instanced a new product, this encapsulate
 			// the product data in an object
 			// Get the quantity to composite the order
