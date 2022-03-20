@@ -35,6 +35,9 @@ import entities.Student;
 import entities.Triangle;
 import entities.VectorExerc;
 import entities.VectorProducts;
+import inheritance_class.BusinessAccount;
+import inheritance_class.SavingsAccount;
+import polimorfismClass.OutSourcedEmployee;
 
 public class Main {
 
@@ -66,10 +69,94 @@ public class Main {
 		// EnumTests();
 		// DecompTests();
 		// SocialMidiaPost();
-		salesSys();
+		// SalesSys();
+		// UpDowCasting();
+		UpDowCastingExercise();
+
 	}
 
-	public static void salesSys() throws ParseException {
+	public static void UpDowCastingExercise() {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Enter the number of employees:");
+		int n = sc.nextInt();
+
+		List<polimorfismClass.Employee> list = new ArrayList<>();
+
+		for (int i = 1; i <= n; i++) {
+			System.out.println("Employee #" + (i + 1) + " data:");
+			System.out.print("Outsourced (y/n)?");
+			char c = sc.next().charAt(0);
+			System.out.print("Name:");
+			sc.nextLine();
+			String name = sc.nextLine();
+			System.out.print("Hours:");
+			int hours = sc.nextInt();
+			System.out.print("Value per hours:");
+			double valuePerHours = sc.nextDouble();
+
+			if (c == 'y') {
+				System.out.print("Additional charge:");
+				double additionalCharge = sc.nextDouble();
+
+				list.add(new OutSourcedEmployee(name, hours, valuePerHours, additionalCharge));
+			} else {
+				list.add(new polimorfismClass.Employee(name, hours, valuePerHours));
+			}
+		}
+
+		System.out.println();
+		System.out.println("Payments:");
+
+		for (polimorfismClass.Employee emp : list) {
+			System.out.println(emp.getName() + " - $" + String.format("%.2f", emp.payment()));
+		}
+		sc.close();
+	}
+
+	public static void UpDowCasting() {
+
+		inheritance_class.Account acc = new inheritance_class.Account(1001, "Alex", 0.0);
+		BusinessAccount bacc = new BusinessAccount(1002, "Maria", 0.0, 500.00);
+
+		// UPCASTING
+		inheritance_class.Account acc1 = bacc;
+		inheritance_class.Account acc2 = new BusinessAccount(1003, "Bob", 0.0, 200.0);
+		inheritance_class.Account acc3 = new SavingsAccount(1004, "Anna", 200.0, 0.1);
+
+		// DOWCASTING
+		BusinessAccount acc4 = (BusinessAccount) acc2;
+		acc4.loan(100.0);
+
+		// BusinessAccount acc5 = (BusinessAccount) acc3; // SavingsAccount cannot be
+		// cast to class BusinessAccount
+
+		if (acc3 instanceof BusinessAccount) {
+			BusinessAccount acc5 = (BusinessAccount) acc3;
+			acc5.loan(500.0);
+			System.out.println("Loan!");
+		}
+		if (acc3 instanceof SavingsAccount) {
+			SavingsAccount acc5 = (SavingsAccount) acc3;
+			acc5.updateBalance();
+			System.out.println("Updated!");
+		}
+
+		inheritance_class.Account acc6 = new inheritance_class.Account(1006, "Moises", 900.0);
+		acc6.withDraw(100.0);
+		System.out.println(acc6.getBalance());
+
+		inheritance_class.Account acc7 = new SavingsAccount(1007, "Lídia", 900.0, 0.01);
+		acc7.withDraw(100.0);
+		System.out.println(acc7.getBalance());
+
+		inheritance_class.Account acc8 = new BusinessAccount(1008, "Obama", 900.0, 200.0);
+		acc8.withDraw(100.0);
+		System.out.println(acc8.getBalance());
+	}
+
+	public static void SalesSys() throws ParseException {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		// create a mask to date
