@@ -38,6 +38,8 @@ import entities.VectorProducts;
 import inheritance_class.BusinessAccount;
 import inheritance_class.SavingsAccount;
 import polimorfismClass.OutSourcedEmployee;
+import polimorfismExercise.ImportedProduct;
+import polimorfismExercise.UsedProduct;
 
 public class Main {
 
@@ -71,7 +73,53 @@ public class Main {
 		// SocialMidiaPost();
 		// SalesSys();
 		// UpDowCasting();
-		UpDowCastingExercise();
+		// UpDowCastingExercise();
+		poliformisExercise();
+
+	}
+
+	public static void poliformisExercise() throws ParseException {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		System.out.print("Enter the number of products:");
+		int n = sc.nextInt();
+
+		List<polimorfismExercise.Product> list = new ArrayList<>();
+
+		for (int i = 1; i <= n; i++) {
+			System.out.println("Product #" + i + " data:");
+			System.out.print("Comon, used or imported (c/u/i)");
+			char c = sc.next().charAt(0);
+			System.out.print("Name:");
+			sc.nextLine();
+			String name = sc.nextLine();
+			System.out.print("Price:");
+			double price = sc.nextDouble();
+
+			if (c == 'i') {
+				System.out.print("Customs fee:");
+				double customsFee = sc.nextDouble();
+
+				list.add(new ImportedProduct(name, price, customsFee));
+			} else if (c == 'u') {
+				System.out.print("Manufacture date (DD/MM/YYY):");
+				Date manufactureDate = sdf.parse(sc.next());
+
+				list.add(new UsedProduct(name, price, manufactureDate));
+			} else {
+				list.add(new polimorfismExercise.Product(name, price));
+			}
+		}
+
+		System.out.println();
+		System.out.println("PRICE TAGS:");
+		for (polimorfismExercise.Product prod : list) {
+			System.out.println(prod.priceTag());
+		}
+
+		sc.close();
 
 	}
 
