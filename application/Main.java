@@ -40,6 +40,9 @@ import inheritance_class.SavingsAccount;
 import polimorfismClass.OutSourcedEmployee;
 import polimorfismExercise.ImportedProduct;
 import polimorfismExercise.UsedProduct;
+import robots_type.RoboFLL;
+import robots_type.RoboOBR;
+import robots_type.Robot;
 
 public class Main {
 
@@ -74,8 +77,54 @@ public class Main {
 		// SalesSys();
 		// UpDowCasting();
 		// UpDowCastingExercise();
-		poliformisExercise();
+		// poliformisExercise();
+		RobotPoliformisExercise();
 
+	}
+
+	public static void RobotPoliformisExercise() {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Enter the number of robots:");
+		int n = sc.nextInt();
+
+		List<Robot> robots = new ArrayList<>();
+
+		for (int i = 1; i <= n; i++) {
+			System.out.println("Robot #" + i + " data:");
+			System.out.print("Enter the type OBR, FLL, Based (o/f/b)");
+			char c = sc.next().charAt(0);
+
+			System.out.print("Name:");
+			sc.nextLine();
+			String name = sc.nextLine();
+			System.out.print("Category:");
+			String category = sc.nextLine();
+			System.out.print("Weight");
+			double weight = sc.nextDouble();
+
+			if (c == 'b') {
+				robots.add(new Robot(name, category, weight));
+			} else if (c == 'f') {
+				System.out.print("Is there arms on the robot? (NO = 0 and YES = 1)");
+				int arms = sc.nextInt();
+
+				robots.add(new RoboFLL(name, category, weight, arms));
+			} else if (c == 'o') {
+				System.out.print("What is the model?:");
+				String model = sc.next();
+
+				robots.add(new RoboOBR(name, category, weight, model));
+			}
+		}
+
+		System.out.println("REPORT ROBOTS TYPE:");
+		System.out.println();
+		for (Robot robot : robots) {
+			System.out.println(robot.repot());
+		}
+		sc.close();
 	}
 
 	public static void poliformisExercise() throws ParseException {
