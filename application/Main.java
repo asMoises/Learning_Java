@@ -17,10 +17,9 @@ import abstract_classes.BusinessAccounts;
 import abstract_classes.Circle;
 import abstract_classes.SavingAccounts;
 import abstract_classes.Shape;
-import contabil.TaxPayer;
-import contabil.Individual;
 import contabil.Company;
-import contabil.contribuinte;
+import contabil.Individual;
+import contabil.TaxPayer;
 import decomp.Department;
 import decomp.HourContract;
 import decomp.Worker;
@@ -47,6 +46,7 @@ import entities.VectorExerc;
 import entities.VectorProducts;
 import inheritance_class.BusinessAccount;
 import inheritance_class.SavingsAccount;
+import model.entities.Reservation;
 import polimorfismClass.OutSourcedEmployee;
 import polimorfismExercise.ImportedProduct;
 import polimorfismExercise.UsedProduct;
@@ -91,7 +91,31 @@ public class Main {
 		// RobotPoliformisExercise();
 		// AbstractClassesEx();
 		// Shapes();
-		CalcIRRF();
+		// CalcIRRF();
+
+		ExceptionClassesExampleOfBadSolution();
+	}
+
+	public static void ExceptionClassesExampleOfBadSolution() throws ParseException {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		System.out.print("Room number:");
+		int number = sc.nextInt();
+		System.out.print("Check-in date: (dd/mm/yyy):");
+		Date checkIn = sdf.parse(sc.next());
+		System.out.print("Check-out date: (dd/mm/yyy):");
+		Date checkOut = sdf.parse(sc.next());
+
+		if (!checkOut.after(checkIn)) {// verifica se uma data vem antes da outra
+			System.out.println("Error in reservation: check-outdo must be  after check-in date!");
+		} else {
+			Reservation reservation = new Reservation(number, checkIn, checkOut);
+			System.out.println("Reservation: " + reservation);
+		}
+		sc.close();
 	}
 
 	public static void CalcIRRF() {
