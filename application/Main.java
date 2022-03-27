@@ -17,6 +17,10 @@ import abstract_classes.BusinessAccounts;
 import abstract_classes.Circle;
 import abstract_classes.SavingAccounts;
 import abstract_classes.Shape;
+import contabil.TaxPayer;
+import contabil.Individual;
+import contabil.Company;
+import contabil.contribuinte;
 import decomp.Department;
 import decomp.HourContract;
 import decomp.Worker;
@@ -86,7 +90,51 @@ public class Main {
 		// poliformisExercise();
 		// RobotPoliformisExercise();
 		// AbstractClassesEx();
-		Shapes();
+		// Shapes();
+		CalcIRRF();
+	}
+
+	public static void CalcIRRF() {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		List<TaxPayer> list = new ArrayList<>();
+
+		System.out.print("Enter the number of tax payers: ");
+		int n = sc.nextInt();
+
+		for (int i = 1; i <= n; i++) {
+			System.out.println("Tax payer #" + i + " data:");
+			System.out.print("Individual or company (i/c)? ");
+			char type = sc.next().charAt(0);
+			System.out.print("Name: ");
+			sc.nextLine();
+			String name = sc.nextLine();
+			System.out.print("Anual income: ");
+			double income = sc.nextDouble();
+			if (type == 'i') {
+				System.out.print("Health expenditures: ");
+				double healthExpenditures = sc.nextDouble();
+				list.add(new Individual(name, income, healthExpenditures));
+			} else {
+				System.out.print("Number of employees: ");
+				int numberOfEmployees = sc.nextInt();
+				list.add(new Company(name, income, numberOfEmployees));
+			}
+		}
+
+		double sum = 0.0;
+		System.out.println();
+		System.out.println("TAXES PAID:");
+		for (TaxPayer tp : list) {
+			double tax = tp.tax();
+			System.out.println(tp.getName() + ": $ " + String.format("%.2f", tax));
+			sum += tax;
+		}
+
+		System.out.println();
+		System.out.println("TOTAL TAXES: $ " + String.format("%.2f", sum));
+		sc.close();
 	}
 
 	public static void Shapes() {
@@ -1039,93 +1087,92 @@ public class Main {
 			opt = sc.nextInt();
 
 			switch (opt) {
-				case 1:
-					// 1 - Insert Product
-					System.out.println("Enter product data.");
-					System.out.print("Name: ");
-					name = sc.next();
-					product.setName(name);
+			case 1:
+				// 1 - Insert Product
+				System.out.println("Enter product data.");
+				System.out.print("Name: ");
+				name = sc.next();
+				product.setName(name);
 
-					do {
-						System.out.print("Price: ");
-						price = sc.nextDouble();
-						if (price <= 0) {
-							System.out.println("Price not allowed! Try another one.");
-						} else {
-							product.setPrice(price);
-						}
-					} while (price <= 0);
-
-					do {
-						System.out.print("Quantity: ");
-						quantity = sc.nextInt();
-						if (quantity <= 0) {
-							System.out.println("Quantity not allowed. Try another one.");
-						} else {
-							product.AddProducts(quantity);
-						}
-					} while (quantity <= 0);
-
-					System.out.println(product);
-					break;
-				case 2:
-					if (product.getName() != "") {
-						// 2 - Add product quantity
-						System.out.println(
-								"Quantity now: " + product.getQuantity()
-										+ "\nEnter the product quantity to add stock.");
-						System.out.print("Quantity: ");
-						quantity = sc.nextInt();
-						product.AddProducts(quantity);
-						product.MessageCreator();
+				do {
+					System.out.print("Price: ");
+					price = sc.nextDouble();
+					if (price <= 0) {
+						System.out.println("Price not allowed! Try another one.");
 					} else {
-						System.out.println("No product avaible!");
-					}
-					break;
-				case 3:
-					// 3 - Remove product quantity
-					if (product.getQuantity() > 0) {
-						System.out.println("Quantity now: " + product.getQuantity()
-								+ "\nEnter the product quantity to remove from stock.");
-						System.out.print("Quantity to remove: ");
-						quantity = sc.nextInt();
-
-						if ((product.getQuantity() - quantity) < 0) {
-							System.out.println("Quantity is not enought to be decrease!");
-						} else {
-							product.RemoveProduct(quantity);
-							product.MessageCreator();
-						}
-					} else {
-						System.out.println("No product avaible!");
-					}
-					break;
-				case 4:
-					if (product.getName() != "") {
-						// 4 - Update product price
-						System.out.print("Price now: " + product.getPrice() + "\nEnter the product new price: ");
-						price = sc.nextDouble();
 						product.setPrice(price);
-						product.MessageCreator();
-					} else {
-						System.out.println("No product avaible!");
 					}
-					break;
-				case 5:
-					if (product.getName() != "") {
-						product.MessageCreator();
-					} else {
-						System.out.println("No product avaible!");
-					}
-					break;
-				case 0:
-					System.out.println("Exiting... OK! :)");
-					break;
+				} while (price <= 0);
 
-				default:
-					// message error in case not from 1 to 5 opt
-					System.out.println("ERROR!\nTry another option!");
-					break;
+				do {
+					System.out.print("Quantity: ");
+					quantity = sc.nextInt();
+					if (quantity <= 0) {
+						System.out.println("Quantity not allowed. Try another one.");
+					} else {
+						product.AddProducts(quantity);
+					}
+				} while (quantity <= 0);
+
+				System.out.println(product);
+				break;
+			case 2:
+				if (product.getName() != "") {
+					// 2 - Add product quantity
+					System.out.println(
+							"Quantity now: " + product.getQuantity() + "\nEnter the product quantity to add stock.");
+					System.out.print("Quantity: ");
+					quantity = sc.nextInt();
+					product.AddProducts(quantity);
+					product.MessageCreator();
+				} else {
+					System.out.println("No product avaible!");
+				}
+				break;
+			case 3:
+				// 3 - Remove product quantity
+				if (product.getQuantity() > 0) {
+					System.out.println("Quantity now: " + product.getQuantity()
+							+ "\nEnter the product quantity to remove from stock.");
+					System.out.print("Quantity to remove: ");
+					quantity = sc.nextInt();
+
+					if ((product.getQuantity() - quantity) < 0) {
+						System.out.println("Quantity is not enought to be decrease!");
+					} else {
+						product.RemoveProduct(quantity);
+						product.MessageCreator();
+					}
+				} else {
+					System.out.println("No product avaible!");
+				}
+				break;
+			case 4:
+				if (product.getName() != "") {
+					// 4 - Update product price
+					System.out.print("Price now: " + product.getPrice() + "\nEnter the product new price: ");
+					price = sc.nextDouble();
+					product.setPrice(price);
+					product.MessageCreator();
+				} else {
+					System.out.println("No product avaible!");
+				}
+				break;
+			case 5:
+				if (product.getName() != "") {
+					product.MessageCreator();
+				} else {
+					System.out.println("No product avaible!");
+				}
+				break;
+			case 0:
+				System.out.println("Exiting... OK! :)");
+				break;
+
+			default:
+				// message error in case not from 1 to 5 opt
+				System.out.println("ERROR!\nTry another option!");
+				break;
 			}
 		} while (opt != 0);
 
