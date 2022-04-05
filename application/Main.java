@@ -47,6 +47,8 @@ import entities.VectorProducts;
 import inheritance_class.BusinessAccount;
 import inheritance_class.SavingsAccount;
 import model.entities.Reservation;
+import model.entities.Reservation1;
+import model.exceptions.DomainException;
 import polimorfismClass.OutSourcedEmployee;
 import polimorfismExercise.ImportedProduct;
 import polimorfismExercise.UsedProduct;
@@ -92,12 +94,50 @@ public class Main {
 		// AbstractClassesEx();
 		// Shapes();
 		// CalcIRRF();
+		// ExceptionClassesExampleOfBadSolution();
 
-		ExceptionClassesExampleOfFirstBadSolution();
+		ExceptionClassesExampleOfGoodSolution();
 	}
 
-	public static void ExceptionClassesExampleOfFirstBadSolution() throws ParseException {
-		//Locale.setDefault(Locale.US);
+	public static void ExceptionClassesExampleOfGoodSolution() {
+		Scanner sc = new Scanner(System.in);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		try {
+			System.out.print("Room number:");
+			int number = sc.nextInt();
+			System.out.print("Check-in date: (dd/mm/yyy):");
+			Date checkIn = sdf.parse(sc.next());
+			System.out.print("Check-out date: (dd/mm/yyy):");
+			Date checkOut = sdf.parse(sc.next());
+
+			Reservation1 reservation1 = new Reservation1(number, checkIn, checkOut);
+			System.out.println("\nReservation: " + reservation1);
+
+			System.out.println("\nEnter data to update the reservation");
+			System.out.print("Check-in date: (dd/mm/yyy):");
+			checkIn = sdf.parse(sc.next());
+			System.out.print("Check-out date: (dd/mm/yyy):");
+			checkOut = sdf.parse(sc.next());
+
+			reservation1.updateDates(checkIn, checkOut);
+			System.out.println("Reservation: " + reservation1);
+		}
+
+		catch (ParseException e) {
+			System.out.println("Invalid date format");
+		} catch (DomainException e) {
+			System.out.println("Error in reservation: " + e.getMessage());
+		} catch (RuntimeException e) {
+			System.out.println("Unexpected error! Tray again!");
+		}
+
+		sc.close();
+	}
+
+	public static void ExceptionClassesExampleOfBadSolution() throws ParseException {
+		// Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -120,7 +160,7 @@ public class Main {
 			checkIn = sdf.parse(sc.next());
 			System.out.print("Check-out date: (dd/mm/yyy):");
 			checkOut = sdf.parse(sc.next());
-			
+
 			String error = reservation.updateDates(checkIn, checkOut);
 
 			if (error != null)
