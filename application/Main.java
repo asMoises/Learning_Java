@@ -97,9 +97,18 @@ public class Main {
 		// CalcIRRF();
 		// ExceptionClassesExampleOfBadSolution();
 		// ExceptionClassesExampleOfGoodSolution();
-		ExceptionsFinalExercise();
+		// ExceptionsFinalExercise();
+		
+		ExceptionFinalExerciseSolved();
 	}
 
+	public static void ExceptionFinalExerciseSolved() {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+		
+		sc.close();
+	}
+	
 	public static void ExceptionsFinalExercise() {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
