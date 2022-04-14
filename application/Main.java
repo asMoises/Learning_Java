@@ -98,17 +98,37 @@ public class Main {
 		// ExceptionClassesExampleOfBadSolution();
 		// ExceptionClassesExampleOfGoodSolution();
 		// ExceptionsFinalExercise();
-		
+
 		ExceptionFinalExerciseSolved();
 	}
 
 	public static void ExceptionFinalExerciseSolved() {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-		
+
+		System.out.println("Informe os dados da conta:");
+		System.out.print("Número: ");
+		int number = sc.nextInt();
+		System.out.print("Titular: ");
+		sc.nextLine(); // get on line from buffer after a number input
+		String holder = sc.nextLine();
+		System.out.print("Saldo inicial: ");
+		double balance = sc.nextDouble();
+		System.out.print("Limite de saque: ");
+		double withdrawLimit = sc.nextDouble();
+
+		model.entities.Account acc = new model.entities.Account(number, holder, balance, withdrawLimit);
+
+		System.out.println();
+		System.out.print("Informe uma quantia para sacar: ");
+		double amount = sc.nextDouble();
+
+		acc.withdraw(amount);
+		System.out.printf("Novo saldo: R$ %.2f%n", acc.getBalance()); // %n breaks line
+
 		sc.close();
 	}
-	
+
 	public static void ExceptionsFinalExercise() {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
