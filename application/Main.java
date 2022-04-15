@@ -49,6 +49,7 @@ import inheritance_class.SavingsAccount;
 import model.entities.Reservation;
 import model.entities.Reservation1;
 import model.exceptions.AccountExampleExceptions;
+import model.exceptions.BusinessException;
 import model.exceptions.DomainException;
 import polimorfismClass.OutSourcedEmployee;
 import polimorfismExercise.ImportedProduct;
@@ -99,18 +100,18 @@ public class Main {
 		// ExceptionClassesExampleOfGoodSolution();
 		// ExceptionsFinalExercise();
 
-		ExceptionFinalExerciseSolved();
+		ExceptionFinalExerciseSolved(); // final exercise of this part!
 	}
 
 	public static void ExceptionFinalExerciseSolved() {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("Informe os dados da conta:");
-		System.out.print("Número: ");
+		System.out.println("Informe os dados da conta");
+		System.out.print("Numero: ");
 		int number = sc.nextInt();
 		System.out.print("Titular: ");
-		sc.nextLine(); // get on line from buffer after a number input
+		sc.nextLine();
 		String holder = sc.nextLine();
 		System.out.print("Saldo inicial: ");
 		double balance = sc.nextDouble();
@@ -118,14 +119,19 @@ public class Main {
 		double withdrawLimit = sc.nextDouble();
 
 		model.entities.Account acc = new model.entities.Account(number, holder, balance, withdrawLimit);
-
+		
 		System.out.println();
 		System.out.print("Informe uma quantia para sacar: ");
 		double amount = sc.nextDouble();
-
-		acc.withdraw(amount);
-		System.out.printf("Novo saldo: R$ %.2f%n", acc.getBalance()); // %n breaks line
-
+		
+		try {
+			acc.withdraw(amount);
+			System.out.printf("Novo saldo: %.2f%n", acc.getBalance());
+		}
+		catch (BusinessException e) {
+			System.out.println(e.getMessage());
+		}
+		
 		sc.close();
 	}
 

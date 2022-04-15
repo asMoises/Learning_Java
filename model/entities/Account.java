@@ -1,20 +1,17 @@
 package model.entities;
 
-import model.exceptions.AccountExampleExceptions;
+import model.exceptions.BusinessException;
 
 public class Account {
 	private Integer number;
 	private String holder;
 	private Double balance;
 	private Double withdrawLimit;
-
+	
 	public Account() {
-
 	}
 
-	public Account(Integer number, String holder, Double balance, Double withdrawLimit)
-			throws AccountExampleExceptions {
-		super();
+	public Account(Integer number, String holder, Double balance, Double withdrawLimit) {
 		this.number = number;
 		this.holder = holder;
 		this.balance = balance;
@@ -41,24 +38,33 @@ public class Account {
 		return balance;
 	}
 
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+
 	public Double getWithdrawLimit() {
 		return withdrawLimit;
 	}
 
+	public void setWithdrawLimit(Double withdrawLimit) {
+		this.withdrawLimit = withdrawLimit;
+	}
+	
 	public void deposit(double amount) {
 		balance += amount;
 	}
-
+	
 	public void withdraw(double amount) {
-		
-		if (amount > balance)
-			throw new AccountExampleExceptions("Witthdraw Error: Not enough balance");
-		
-		if (amount > withdrawLimit)
-			throw new AccountExampleExceptions("Witthdraw Error: The amount exceeds withdraw daily limit!");
-
-		
-
+		validateWithdraw(amount);
 		balance -= amount;
+	}
+	
+	private void validateWithdraw(double amount) {
+		if (amount > getWithdrawLimit()) {
+			throw new BusinessException("Erro de saque: A quantia excede o limite de saque");
+		} 
+		if (amount > getBalance()) {
+			throw new BusinessException("Erro de saque: Saldo insuficiente");
+		}
 	}
 }
